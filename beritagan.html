@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171416">
+<title>IKEL STORE</title>
+<style>
+:root{--bg:#181516;--card:#252022;--pink:#ff2385;--pink2:#ff5ba8;--red:#ff2748;--purple:#7d25ff;--text:#fff5f8;--muted:#aaa0a5;--line:#3a3336;--green:#31d49a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}button{cursor:pointer}
+.wrap{max-width:900px;margin:auto}
+.header{height:66px;position:sticky;top:0;z-index:30;background:#181516ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.logo{font-size:22px;font-weight:950}.logo span{color:var(--pink)}
+.cart-btn{position:relative;border:0;background:var(--pink);color:white;border-radius:13px;padding:11px 14px;font-weight:900}
+.count{position:absolute;right:-7px;top:-8px;width:21px;height:21px;background:white;color:var(--pink);border-radius:50%;display:grid;place-items:center;font-size:11px}
+.hero{margin:15px 16px 20px;padding:25px 20px;min-height:190px;border-radius:23px;background:radial-gradient(circle at 80% 30%,#ff2389,#75144f 25%,#2b1b2b 60%,#1c1719 100%);box-shadow:0 12px 35px #0008}
+.hero h1{font-size:30px;margin:0 0 8px}.hero p{color:#eee;line-height:1.5;margin:0;max-width:600px}
+.hero a{display:inline-block;margin-top:17px;background:#fff;color:#c31b68;padding:11px 16px;border-radius:11px;font-weight:900;text-decoration:none}
+.section{padding:0 16px;margin:20px 0}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.section-head h2{font-size:20px;margin:0}.section-head span{color:#ff6cab;font-size:14px}
+.chips{display:flex;gap:8px;overflow:auto}.chip{white-space:nowrap;border:1px solid #453b40;background:#252022;color:#ddd;padding:9px 14px;border-radius:20px}.chip.active{background:var(--pink);border-color:var(--pink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 8px 22px #0006}
+.visual{height:184px;padding:9px;position:relative;background:linear-gradient(135deg,#ff0081,#8518c5 55%,#201024)}
+.visual.red{background:linear-gradient(135deg,#ff2947,#a30d32 55%,#211014)}.visual.purple{background:linear-gradient(135deg,#a51aff,#3511a3 55%,#161020)}.visual.gold{background:linear-gradient(135deg,#ff9a19,#d52652 55%,#241116)}
+.hot{position:absolute;top:9px;left:9px;background:#ff2948;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:900}.platform{position:absolute;top:42px;left:10px;background:#111d;padding:5px 9px;border-radius:6px;font-size:12px}
+.art{height:100%;display:grid;place-items:center;font-size:68px;text-shadow:0 12px 14px #0009}
+.info{padding:13px 14px 15px}.tag{display:inline-block;border:1px solid #3e74b6;color:#62a9ff;border-radius:5px;padding:4px 7px;font-size:11px}.tag.premium{border-color:#a17a21;color:#e8b32c}
+.name{font-size:16px;font-weight:900;margin:9px 0}.old{font-size:12px;color:#777;text-decoration:line-through}.price{font-size:19px;color:#ff69aa;font-weight:950;margin-top:3px}.save{font-size:12px;color:var(--green);margin-top:4px}
+.buy{width:100%;border:0;border-radius:10px;background:linear-gradient(90deg,#ff207f,#ff425f);color:#fff;padding:10px;margin-top:11px;font-weight:900}
+.overlay{position:fixed;inset:0;background:#000b;z-index:100;display:none}.overlay.show{display:block}
+.drawer{position:absolute;right:0;top:0;width:min(430px,100%);height:100%;background:#1d191b;padding:18px;overflow:auto}.drawer-head{display:flex;align-items:center;justify-content:space-between}.close{border:0;background:#342d30;color:white;border-radius:10px;padding:9px 12px}
+.cart-row{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}.thumb{width:58px;height:58px;border-radius:11px;background:linear-gradient(135deg,#ff2388,#5c15a1);display:grid;place-items:center;font-size:25px}.qty{display:flex;align-items:center;gap:8px;margin-top:7px}.qty button{width:26px;height:26px;border:0;border-radius:7px;background:#3c3538;color:#fff}
+.total{display:flex;justify-content:space-between;font-size:20px;font-weight:950;margin:18px 0}.primary{width:100%;border:0;border-radius:12px;padding:14px;background:var(--pink);color:#fff;font-weight:950}
+.pay-overlay{position:fixed;inset:0;background:#000b;z-index:120;display:none;align-items:center;justify-content:center;padding:18px}.pay-overlay.show{display:flex}.modal{width:min(430px,100%);background:#211d1f;border:1px solid #493d42;border-radius:22px;padding:20px}
+.qr{width:245px;height:245px;background:#fff;border-radius:14px;margin:15px auto;padding:10px;display:grid;place-items:center}.qr img{width:100%;height:100%;object-fit:contain}.qr-placeholder{color:#111;border:9px dashed #111;padding:28px;text-align:center;font-weight:950;font-size:24px}
+.field{width:100%;padding:13px;margin:6px 0;border-radius:10px;border:1px solid #443a3e;background:#2b2528;color:white;outline:none}.note{font-size:12px;color:#aaa;line-height:1.5;margin-top:10px}
+.wa{position:fixed;right:18px;bottom:18px;z-index:50;width:59px;height:59px;border-radius:50%;display:grid;place-items:center;background:#ff5b92;color:#fff;font-size:27px;box-shadow:0 10px 30px #0009}
+.empty{text-align:center;color:#aaa;padding:40px 5px}footer{text-align:center;color:#777;padding:28px 16px}
+@media(max-width:390px){.grid{gap:9px}.visual{height:160px}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="header">
+  <div class="logo">IKEL<span>STORE</span></div>
+  <button class="cart-btn" onclick="openCart()">🛒 Keranjang <b class="count" id="count">0</b></button>
+</header>
+
+<section class="hero">
+  <h1>IKEL STORE ⚡</h1>
+  <p>Belanja produk digital dengan cepat. Pilih produk, masukkan ke keranjang, lalu bayar melalui QRIS.</p>
+  <a href="#produk">Belanja Sekarang</a>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>Kategori</h2><span>Semua ›</span></div>
+  <div class="chips">
+    <button class="chip active" onclick="filterCat('Semua',this)">Semua</button>
+  </div>
+</section>
+
+<section class="section" id="produk">
+<div class="section-head"><h2></h2><span>Lihat ›</span></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<footer>© 2026 IKEL STORE — Digital Store</footer>
+</div>
+
+<a class="wa" href="https://wa.me/6289618131157" target="_blank">◔</a>
+
+<div class="overlay" id="cartOverlay" onclick="if(event.target===this)closeCart()">
+ <aside class="drawer">
+  <div class="drawer-head"><h2>🛒 Keranjang</h2><button class="close" onclick="closeCart()">✕</button></div>
+  <div id="cartList"></div>
+  <div class="total"><span>Total</span><span id="total">Rp 0</span></div>
+  <button class="primary" onclick="checkout()">💳 Bayar dengan QRIS</button>
+ </aside>
+</div>
+
+<div class="pay-overlay" id="payOverlay">
+ <div class="modal">
+  <div class="drawer-head"><h2>💳 Pembayaran QRIS</h2><button class="close" onclick="closePay()">✕</button></div>
+  <p style="color:#bbb">Total: <b id="payTotal" style="color:#ff69aa"></b></p>
+  <div class="qr">
+   <img src="https://i.ibb.co.com/5WSMSkdG/IMG-20260928-095019.jpg" alt="QRIS" onerror="this.style.display='none';document.getElementById('placeholder').style.display='block'">
+   <div class="qr-placeholder" id="placeholder" style="display:none">QRIS<br><small style="font-size:11px">Ganti dengan file qris.png milik toko</small></div>
+  </div>
+  <input class="field" id="buyerName" placeholder="Nama pembeli">
+  <input class="field" id="buyerPhone" placeholder="Nomor WhatsApp">
+  <button class="primary" onclick="sendOrder()">✅ Saya Sudah Bayar</button>
+  <div class="note">Template ini tidak memverifikasi pembayaran otomatis. Gunakan QRIS/payment gateway resmi jika ingin verifikasi otomatis.</div>
+ </div>
+</div>
+
+<script>
+const products=[
+{id:1,n:'ALIGHT MOTION 1 TAHUN',cat:'ALIGHT MOTION',p:3500,o:5000,s:1500,i:'🔥',c:''},
+{id:2,n:'APK QR TANPA KTP',cat:'APLIKASI',p:2500,o:4000,s:1500,i:'🔥',c:'red'},
+{id:3,n:'POSTER GB FT/ISIAN',cat:'POSTER',p:3000,o:5000,s:2000,i:'🎯',c:'red'},
+{id:4,n:'DESAIN QRIS',cat:'DESAIN',p:1000,o:2000,s:1000,i:'👾',c:'purple'},
+{id:5,n:'SUNTIK SALURAN 100 PENGIKUT',cat:'SUNTIK SALURAN',p:1500,o:2500,s:1000,i:'🔥',c:'gold'},
+{id:6,n:'SUNTIK SALURAN 300 PENGIKUT',cat:'SUNTIK SALURAN',p:2500,o:3500,s:1000,i:'⭐',c:'purple'},
+{id:7,n:'SUNTIK SALURAN 500 PENGIKUT',cat:'SUNTIK SALURAN',p:4500,o:6000,s:1500,i:'🔥',c:''},
+{id:8,n:'SUNTIK SALURAN 800 PENGIKUT',cat:'SUNTIK SALURAN',p:7000,o:9000,s:2000,i:'⭐',c:'red'}
+];
+
+let cart=[];
+const rp=n=>'Rp '+n.toLocaleString('id-ID');
+
+function render(list=products){
+ document.getElementById('grid').innerHTML=list.map(p=>`
+ <article class="card">
+  <div class="visual ${p.c}">
+   <span class="hot">♨ HOT</span><span class="platform">${p.cat}</span>
+   <div class="art">${p.i}</div>
+  </div>
+  <div class="info">
+   <div class="name">${p.n}</div>
+   <div class="old">${rp(p.o)}</div>
+   <div class="price">${rp(p.p)}</div>
+   <div class="save">Hemat ${rp(p.s)}</div>
+   <button class="buy" onclick="add(${p.id})">+ Keranjang</button>
+  </div>
+ </article>`).join('');
+}
+
+function filterCat(cat,el){
+ document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+ render(cat==='Semua'?products:products.filter(p=>p.cat===cat));
+}
+
+function add(id){
+ const p=products.find(x=>x.id===id),x=cart.find(v=>v.id===id);
+ x?x.q++:cart.push({...p,q:1});updateCart();openCart();
+}
+
+function change(id,d){
+ const x=cart.find(v=>v.id===id);if(!x)return;x.q+=d;if(x.q<=0)cart=cart.filter(v=>v.id!==id);updateCart();
+}
+
+function updateCart(){
+ document.getElementById('count').textContent=cart.reduce((a,x)=>a+x.q,0);
+ const list=document.getElementById('cartList');
+ if(!cart.length){list.innerHTML='<div class="empty">Keranjang masih kosong.</div>';document.getElementById('total').textContent='Rp 0';return}
+ list.innerHTML=cart.map(x=>`
+ <div class="cart-row"><div class="thumb">${x.i}</div><div style="flex:1"><b>${x.n}</b><div style="color:#ff69aa;margin-top:4px">${rp(x.p)}</div>
+ <div class="qty"><button onclick="change(${x.id},-1)">−</button><span>${x.q}</span><button onclick="change(${x.id},1)">+</button></div></div></div>`).join('');
+ document.getElementById('total').textContent=rp(cart.reduce((a,x)=>a+x.p*x.q,0));
+}
+
+function openCart(){updateCart();document.getElementById('cartOverlay').classList.add('show')}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('show')}
+
+function checkout(){
+ if(!cart.length)return alert('Keranjang masih kosong.');
+ document.getElementById('payTotal').textContent=rp(cart.reduce((a,x)=>a+x.p*x.q,0));
+ closeCart();document.getElementById('payOverlay').classList.add('show');
+}
+
+function closePay(){document.getElementById('payOverlay').classList.remove('show')}
+
+function sendOrder(){
+ const name=document.getElementById('buyerName').value.trim(),phone=document.getElementById('buyerPhone').value.trim();
+ if(!name||!phone)return alert('Isi nama dan nomor WhatsApp.');
+ const total=cart.reduce((a,x)=>a+x.p*x.q,0);
+ const items=cart.map(x=>`${x.n} x${x.q}`).join(', ');
+ const msg=encodeURIComponent(`Halo Admin, saya ${name}. Saya sudah bayar via QRIS. Pesanan: ${items}. Total: ${rp(total)}. No WA: ${phone}`);
+ window.open('https://wa.me/6289618131157?text='+msg,'_blank');
+}
+
+render();updateCart();
+</script>
+
+</body>
+</html>
